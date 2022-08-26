@@ -7,6 +7,16 @@ const getEvents = asyncHandler(async (req, res) => {
   res.status(200).json(events)
 })
 
+//Get 1 event by id
+// GET /api/events/:id
+const getOneEvent = asyncHandler(async (req, res) => {
+  const id = req.params.id
+  const event = await Event.findById(id)
+  res.status(200).json(event)
+})
+
+
+
 //Post an event to DB
 // POST /api/events
 const postEvents = asyncHandler(async (req, res) => {
@@ -49,7 +59,8 @@ module.exports = {
   getEvents,
   postEvents,
   deleteEvent,
-  updateEvents
+  updateEvents,
+  getOneEvent
 }
 
 //ep #2 around 40-50min for protected routes

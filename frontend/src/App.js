@@ -6,6 +6,7 @@ import Events from "./pages/Events";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Header from "./components/Header";
+import EventShow from "./components/EventShow";
 // import logo from './logo.svg';
 // import './App.css';
 
@@ -17,6 +18,7 @@ function App() {
           <Header />
             <Routes>
               <Route exact path="/" element={<Events />} />
+              <Route exact path="/events/:id" element={<EventShow />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/register" element={<Register />} />
             </Routes>
