@@ -10,13 +10,13 @@ const getEvents = asyncHandler(async (req, res) => {
 //Post an event to DB
 // POST /api/events
 const postEvents = asyncHandler(async (req, res) => {
-  if(!req.body.title) {
+  const { title, date, hours } = req.body
+  console.log("Post event Req.body: ", req.body)
+  if(!title && !date && !hours) {
     res.status(400)
-    throw new Error('Please add a title field')
+    throw new Error('Please add all fields')
   }
-  const event = await Event.create({
-    title: req.body.title
-  })
+  const event = await Event.create({ title, date, hours })
   res.status(200).json(event)
 })
 

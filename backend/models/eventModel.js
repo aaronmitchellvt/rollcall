@@ -6,6 +6,12 @@ const eventSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    date: {
+      type: String
+    },
+    hours: {
+      type: String
+    }
   },
   {
     timestamps: true,

@@ -5,11 +5,13 @@ const API_URL = 'api/events/'
 const createEvent = async (eventData) => {
   console.log("Event data: ", eventData)
   const response = await axios.post(API_URL, eventData)
+  console.log("Response data: ", response.data)
   return response.data
 }
 
 const getEvents = async () => {
   const response = await axios.get(API_URL)
+  console.log("Get events response data: ", response.data)
   return response.data
 }
 

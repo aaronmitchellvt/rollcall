@@ -12,9 +12,9 @@ const initialState = {
 //create new event
 export const createEvent = createAsyncThunk(
   "events/create",
-  async (eventData, thunkAPI) => {
+  async (eventPayload, thunkAPI) => {
     try {
-      return await eventService.createEvent(eventData);
+      return await eventService.createEvent(eventPayload);
     } catch (error) {
       const message =
         (error.response &&
