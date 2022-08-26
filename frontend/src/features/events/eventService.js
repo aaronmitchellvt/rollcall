@@ -15,9 +15,21 @@ const getEvents = async () => {
   return response.data
 }
 
-const eventService = {
-  createEvent,
-  getEvents
+const getOneEvent = async (eventId) => {
+  const response = await axios.get(`http://localhost:5000/api/events/${eventId}`)
+  console.log("One Event Response data: ", response.data)
+  return response.data
 }
 
+const deleteEvent = async (id) => {
+  const response = await axios.delete(`http://localhost:5000/api/events/${id}`)
+  return response.data
+}
+
+const eventService = {
+  createEvent,
+  getEvents,
+  getOneEvent,
+  deleteEvent
+}
 export default eventService
