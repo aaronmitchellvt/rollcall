@@ -1,5 +1,6 @@
 import axios from 'axios'
-const API_URL = '/api/events/'
+const API_URL = 'api/events/'
+// const API_URL = "http://localhost:5000/api/events"
 
 const createEvent = async (eventData) => {
   console.log("Event data: ", eventData)

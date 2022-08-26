@@ -12,6 +12,9 @@ function Events() {
 
   const {user} = useSelector((state)=>state.auth)
   const { events, isLoading, isError, message } = useSelector((state)=>state.events)
+  if(user){
+    console.log("User email: ", user.email)
+  }
 
   useEffect(() => {
     if(isError) {
@@ -38,8 +41,7 @@ function Events() {
       <p>Events Dashboard</p>
     </section>
 
-    <EventForm />
-
+    {user && user.email === "admin@email.com" && <EventForm /> }
     <section className='content'>
       {events.length > 0 ? (
         <div className='goals'>
