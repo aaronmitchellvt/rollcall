@@ -1,5 +1,9 @@
 const asyncHandler = require('express-async-handler')
 const Event = require('../models/eventModel')
+const User = require('../models/userModel')
+const uploadImage = require('../services/uploadImage')
+// const { got } = require('got') 
+
 //Get the available events
 // GET /api/events
 const getEvents = asyncHandler(async (req, res) => {
@@ -15,18 +19,17 @@ const getOneEvent = asyncHandler(async (req, res) => {
   res.status(200).json(event)
 })
 
-
-
 //Post an event to DB
 // POST /api/events
-const postEvents = asyncHandler(async (req, res) => {
-  const { title, date, hours } = req.body
+const postEvents = asyncHandler(uploadImage.single("layoutImg"), async (req, res) => {
+  console.log("Hit post on backend")
+  const { title, date, hours, weatherDate } = req.body
   console.log("Post event Req.body: ", req.body)
-  if(!title && !date && !hours) {
+  if(!title && !date && !hours && !weatherDate) {
     res.status(400)
     throw new Error('Please add all fields')
   }
-  const event = await Event.create({ title, date, hours })
+  const event = await Event.create({ title, date, hours, weatherDate, layoutImg: req.file.location })
   res.status(200).json(event)
 })
 
@@ -55,12 +58,46 @@ const updateEvents = asyncHandler(async (req, res) => {
   res.status(200).json(updatedEvent)
 })
 
+//Register for an event
+const registerForEvent = asyncHandler(async (req, res) => {
+  console.log('req body: ', req.body)
+  const { estimatedArrivalTime, userId } = req.body
+  const user = await User.findById(userId)
+  const userName = user.name
+  console.log("User: ", user.name)
+  console.log("est arrival: ", estimatedArrivalTime)
+  const event = await Event.findById(req.params.id)
+  if(!event) {
+    res.status(400)
+    throw new Error('Event not found')
+  }
+
+  const player = {estimatedArrivalTime, userName}
+  console.log("Player to push: ", player)
+  await event.players.push(player)
+  res.status(200).json(event.players)
+})
+
+//Get registered players
+//GET /api/events/registered
+const getRegisteredPlayers = asyncHandler(async (req, res) => {
+  const event = await Event.findById(req.params.id)
+  if(!event) {
+    res.status(400)
+    throw new Error('Event not found')
+  }
+  res.status(200).json(event.players)
+})
+
 module.exports = {
   getEvents,
   postEvents,
   deleteEvent,
   updateEvents,
-  getOneEvent
+  getOneEvent,
+  registerForEvent,
+  getRegisteredPlayers,
+  // getEventWeather
 }
 
 //ep #2 around 40-50min for protected routes
