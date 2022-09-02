@@ -4,13 +4,22 @@ const eventSchema = mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      // required: true,
     },
     date: {
       type: String
     },
     hours: {
       type: String
+    },
+    weatherDate: {
+      type: String
+    },
+    layoutImg: {
+      type: String
+    },
+    players: {
+      type: Array
     }
   },
   {

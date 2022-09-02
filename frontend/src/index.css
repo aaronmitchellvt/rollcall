@@ -167,6 +167,11 @@ h3 {
   justify-content: center;
 }
 
+.margin-top-bottom{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
 .btn svg {
   margin-right: 8px;
 }
